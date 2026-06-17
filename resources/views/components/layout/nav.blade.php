@@ -13,6 +13,7 @@
                 <span class="text-sm text-gray-500">Welcome, {{ auth()->user()->name }}</span>
                 <form action="/logout" method="POST">
                     @csrf
+                    @method('DELETE')
                     <button type="submit" data-test="logout-test" class="btn-outlined">Logout</button>
                 </form>
             @endauth

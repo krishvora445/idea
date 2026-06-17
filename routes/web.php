@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisteredUserController;
 
 Route::get('/', fn () => view('welcome'));
 
@@ -14,4 +14,4 @@ Route::post('/register', [RegisteredUserController::class, 'store'])->middleware
 Route::get('/login', [SessionsController::class, 'create'])->name('login')->middleware('guest');
 Route::post('/login', [SessionsController::class, 'store'])->middleware('guest');
 
-Route::post('/logout', [SessionsController::class, 'destroy'])->middleware('auth');
+Route::delete('/logout', [SessionsController::class, 'destroy'])->middleware('auth');
