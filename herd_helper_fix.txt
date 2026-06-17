@@ -1,0 +1,40 @@
+# Fixing the "Herd Helper cannot be reached" Service Error
+
+The popup message "Herd is not working properly" when you log into Windows happens because the **HerdHelper** service is set to start automatically with Windows, but it is currently stopped and failing to start.
+
+Because this background service is stopped, Laravel Herd cannot update your `hosts` file to route `.test` domains (like `idea.test`) correctly, leading to the DNS errors we saw earlier.
+
+Here are the ways to start the service and get Herd working properly:
+
+---
+
+### Option 1: Start the Service via Windows Services UI (Easiest)
+
+1. Press `Win + R` on your keyboard to open the Run dialog.
+2. Type **`services.msc`** and press **Enter**.
+3. Scroll down the list of services to find **"Herd Helper"**.
+4. Right-click **"Herd Helper"** and select **Start** (or **Restart**).
+5. Open your Laravel Herd settings window and verify if the status dot next to **HerdHelper** turns **Green**.
+
+---
+
+### Option 2: Start the Service via Administrator Command Prompt
+
+1. Press the **Windows Key** on your keyboard, type **`cmd`** or **`PowerShell`**.
+2. Right-click on **Command Prompt** (or **Windows PowerShell**) and select **"Run as administrator"**.
+3. Run the following command and press **Enter**:
+   ```cmd
+   net start HerdHelper
+   ```
+   *(Or in PowerShell: `Start-Service HerdHelper`)*
+
+---
+
+### Option 3: Change the HerdHelper Port (If there is a hidden conflict)
+
+If the service starts but immediately stops again, it might be trying to bind to a port that is blocked or restricted:
+
+1. Open the **Laravel Herd Settings** window.
+2. Go to the **General** tab.
+3. Under **HerdHelper**, change the **Port** field from `5000` to a different number (for example, `5050` or `5555`).
+4. Click **"Write to Hosts File (Requires Admin Permissions)"**. A Windows UAC prompt will appear; click **Yes** to allow it to update the port and start the service.

@@ -1,0 +1,22 @@
+# Fixing .test Domain Resolution in Zen Browser (Firefox-based)
+
+This issue occurs because Zen Browser (being Firefox-based) handles networking and DNS resolution differently than Chrome.
+
+### Why this happens
+1. Chrome looks at the Windows hosts file (where Laravel Herd maps `idea.test` to `127.0.0.1`), finds the IPv4 address, and loads the page immediately.
+2. Zen Browser queries your network router for the IPv6 (AAAA) record of `idea.test` because the hosts file only maps the IPv4 address.
+3. Your local Wi-Fi router/network forwards this request to a Tailscale DNS server ([fd7a:115c:a1e0::53]:53), which returns a "no such host" error. Zen Browser aborts the connection upon receiving this error.
+
+---
+
+### The Solution: Disable IPv6 in Zen Browser
+
+Forcing Zen Browser to only look up IPv4 addresses will stop it from querying the router for IPv6, making it respect your hosts file immediately:
+
+1. Open Zen Browser.
+2. Type `about:config` in the address bar and press Enter.
+3. Click "Accept the Risk and Continue".
+4. Search for:
+   network.dns.disableIPv6
+5. Toggle the setting from `false` to `true` (by double-clicking it or clicking the toggle button).
+6. Restart Zen Browser and load http://idea.test.
