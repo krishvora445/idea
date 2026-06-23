@@ -25,7 +25,7 @@
         x-init="setTimeout(() => show = false, 3000)"
         x-show="show"
         x-transition.opacity.scale.duration.400ms
-        class="absolute bottom-4 right-4 bg-primary text-white px-5 py-4 px-2 rounded-xl shadow-xl"
+        class="absolute bottom-4 right-4 bg-primary text-white px-5 py-4 rounded-xl shadow-xl"
     >
         {{ $value }}👋
     </div>

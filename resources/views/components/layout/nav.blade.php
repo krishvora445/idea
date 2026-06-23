@@ -3,7 +3,7 @@
 
         <div class="">
             <a href="/" class="text-xl font-bold">
-                <img src="/images/logo.png" alt="Idea logo" width="100">
+                <img src="{{ asset('images/logo.png') }}" alt="Idea logo" width="100">
 
             </a>
         </div>
@@ -14,7 +14,7 @@
                 <form action="/logout" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" data-test="logout-test" class="btn-outlined">Logout</button>
+                    <button type="submit" data-test="logout-test" class="btn btn-outlined">Logout</button>
                 </form>
             @endauth
 

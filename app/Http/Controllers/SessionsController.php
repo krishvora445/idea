@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
 class SessionsController extends Controller
 {
@@ -15,12 +16,12 @@ class SessionsController extends Controller
 
     public function store(Request $request)
     {
-       $attributes = $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255',],
-            'password' => ['required', 'string', 'min:8','max:255'],
+        $attributes = $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:8', 'max:255'],
         ]);
 
-        if(!Auth::attempt($attributes)){
+        if (! Auth::attempt($attributes)) {
             return back()
                 ->withErrors(['password' => 'We are unable to authenticate using the provided credentials.'])
                 ->withInput();
@@ -30,9 +31,12 @@ class SessionsController extends Controller
         return redirect()->intended('/')->with('success', 'You have successfully logged in');
     }
 
-    public function destroy()
+    public function destroy(Request $request)
     {
         Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return redirect('/');
     }

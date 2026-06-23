@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
+[x-cloak] {
+    display: none !important;
+}
+
+
 @import 'components/form.css' layer(components);
 @import 'components/btn.css' layer(components);
 

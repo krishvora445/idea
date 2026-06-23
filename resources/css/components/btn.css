@@ -11,8 +11,10 @@ button {
     font-weight: var(--font-weight-medium);
     cursor: pointer;
     height: calc(var(--spacing) * 8);
-    line-height: calc(var(--spacing) * 8);
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
 }
 
 .btn.btn-outlined {
@@ -31,7 +33,7 @@ button {
 }
 
 .btn:has(> svg) {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     column-gap: calc(var(--spacing) * 2);
 }
