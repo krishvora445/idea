@@ -26,26 +26,11 @@ class IdeaController extends Controller
             $status = null;
         }
 
-        //        return view('ideas.index', [
-        //            'ideas' => Idea::query()->with('user'),
-        //        ]);
-        //        $ideas = Auth::user()->ideas()->where('status','pending')->get();
         $ideas = $user
             ->ideas()
             ->when($request->status, fn ($query, $status) => $query->where('status', $status))
-//            ->where('status',request('status','all'))
+
             ->get();
-
-        // SELECT status , COUNT(*)  FROM ideas GROUP by status
-
-        //        $statusCounts = Auth::user()
-        //            ->ideas()
-        //            ->selectRaw('status, COUNT(*) as count')
-        //            ->groupBy('status')
-        //            ->pluck('count', 'status')
-        //            ->toArray();
-
-        //        dd($statusCounts);
 
         return view('idea.index', [
             'ideas' => $ideas,
@@ -72,9 +57,11 @@ class IdeaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Idea $idea): void
+    public function show(Idea $idea)
     {
-        //
+        return view('idea.show', [
+            'idea' => $idea,
+        ]);
     }
 
     /**
@@ -96,8 +83,10 @@ class IdeaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Idea $idea): void
+    public function destroy(Idea $idea)
     {
-        //
+        $idea->delete();
+
+        return to_route('idea.index')->with('success', 'Idea deleted successfully.');
     }
 }
