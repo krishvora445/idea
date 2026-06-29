@@ -4,6 +4,16 @@
             <header>
                 <h1 class="text-3xl font-bold mb-6">Ideas</h1>
                 <p class="text-gray-600 mb-4">Capture your thoughts. Make a plan.</p>
+
+                <x-card
+                    x-data
+                    @click="$dispatch('open-modal', 'create-idea')"
+                    is="button"
+                    type="button"
+                    class="mb-6 cursor-pointer h-32 w-full text-left"
+                    >
+                    <p class=" mb-4 text-amber-50">What's the idea?</p>
+                </x-card>
             </header>
 
             @php
@@ -85,21 +95,6 @@
                 </x-dropdown>
             </div>
 
-{{--            <div class="mb-6 flex items-center gap-4">--}}
-{{--                --}}{{--                <a href="/ideas" class="btn {{ request('status') ===  null ? '' : 'btn-outlined' }}">All</a>  // mu way --}}
-{{--                <a href="/ideas" class="btn {{ request()->has('status') ? 'btn-outlined' : '' }}">All</a>--}}
-{{--                @foreach(\App\IdeaStatus::cases() as $status)--}}
-{{--                    <a href="/ideas?status={{$status}}" class="btn {{ request('status') ===  $status->value ? '' : 'btn-outlined' }}">{{$status->label()}}</a>--}}
-{{--                @endforeach--}}
-{{--            </div>--}}
-
-
-{{--            <div class="mb-6 flex items-center gap-4">--}}
-{{--                <a href="/ideas" class="btn {{ request('status') ===  null ? '' : 'btn-outlined' }}">All</a>--}}
-{{--                <a href="/ideas?status=pending" class="btn {{ request('status') ===  'pending' ? '' : 'btn-outlined' }}">Pending</a>--}}
-{{--                <a href="/ideas?status=in_progress" class="btn {{ request('status') ===  'in_progress' ? '' : 'btn-outlined' }}">In progress</a>--}}
-{{--                <a href="/ideas?status=completed" class="btn {{ request('status') ===  'completed' ? '' : 'btn-outlined' }}">Completed</a>--}}
-{{--            </div>--}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
                 @forelse($ideas as $idea)
 {{--                    <x-card href="{{ $idea->path() }}" class="h-full flex flex-col">--}}
@@ -121,5 +116,12 @@
                 @endforelse
             </div>
         </div>
+
+        <x-modal name="create-idea" title="Create New Idea">
+            <x-card class="mb-4">
+
+            </x-card>
+{{--            <p>this is new idea</p>--}}
+        </x-modal>
 
 </x-layout>
